@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        /* Reset and Basic Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #ACD8AA;
+            color: #333;
+            padding-top: 50px;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #036016;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 2em;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            font-weight: bold;
+        }
+
+        header nav {
+            margin-top: 15px;
+        }
+
+        header nav a {
+            margin: 0 15px;
+            font-size: 1em;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        header nav a:hover {
+            color: #03440C;
+        }
+
+        /* Main Content */
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 30px 0;
+        }
+
+        section {
+            padding: 50px 0;
+            margin-bottom: 30px;
+        }
+
+        /* About Me Section */
+        #about {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #about img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-right: 30px;
+        }
+
+        #about .content {
+            max-width: 600px;
+        }
+
+        /* Portfolio Section */
+        #portfolio {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #portfolio .projects {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .project {
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 20px;
+            width: calc(33% - 40px);
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .project img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .project h3 {
+            margin-top: 15px;
+        }
+
+        .project a {
+            text-decoration: none;
+            color: #2E3B4E;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #contact a {
+            color: #2E3B4E;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #036016;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header nav {
+                font-size: 0.9em;
+            }
+
+            .project {
+                width: calc(50% - 40px);
+            }
+
+            #about {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            #about img {
+                margin-bottom: 20px;
+            }
+
+            .project {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+            }
+
+            header {
+                font-size: 1.5em;
+                padding: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>Alex Bessin</div>
+    <nav>
+        <a href="h2">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- About Section -->
+    <section id="about">
+        <img src="https://i.ibb.co/fHb0jf7/468542622-1013929947213902-1504835171058852270-n.jpg" alt="Alex Bessin">
+        <div class="content">
+            <h2>About Me</h2>
+            <p>Hello! I’m Alex Bessin, an upcoming Aerospace Engineer. I am in the Freshman class of 2029 at Clarkson. I have been coding websites since 2021. I enjoy playing a variety of sports as well as video games. </p>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <h2>My Work</h2>
+        <div class="projects">
+            <div class="project">
+                <img src="https://via.placeholder.com/300x200" alt="Project 1">
+                <h3>Project 1</h3>
+                <a href="#">View Project</a>
+            </div>
+            <div class="project">
+                <img src="https://via.placeholder.com/300x200" alt="Project 2">
+                <h3>Project 2</h3>
+                <a href="#">View Project</a>
+            </div>
+            <div class="project">
+                <img src="https://via.placeholder.com/300x200" alt="Project 3">
+                <h3>Project 3</h3>
+                <a href="#">View Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>If you’re interested in collaborating on a project or just want to say hello, feel free to reach out to me!</p>
+        <p>Email: <a href="mailto:alexander.i.bessin@gmail.com">alexander.i.bessin@gmail.com</a></p>
+        <p>Phone: <b>+1 703-304-3851</b></p>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2025 Alex Bessin. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
+#https://coolors.co/04773b-036016-03440c-acd8aa-442b48
+        </style>
+
+    </body>
+</html>
