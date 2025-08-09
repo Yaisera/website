@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Diana's Slayer Viewer</title>
+<title>Hypixel Slayer Stats Viewer</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -28,7 +28,7 @@
     border-radius: 4px;
     border: none;
     margin-right: 10px;
-    width: 220px;
+    width: 300px;
   }
   #input-area button {
     padding: 8px 16px;
@@ -46,6 +46,7 @@
     color: #f44336;
     margin-top: 10px;
   }
+
   #container {
     display: flex;
     gap: 20px;
@@ -61,7 +62,7 @@
     box-sizing: border-box;
   }
   #player-info {
-    flex: 1 1 200px;
+    flex: 1 1 250px;
     text-align: center;
   }
   #player-info img {
@@ -70,7 +71,7 @@
     border: 3px solid #444;
   }
   #slayers {
-    flex: 2 1 400px;
+    flex: 2 1 600px;
   }
   #slayers h2 {
     border-bottom: 1px solid #444;
@@ -86,79 +87,63 @@
 <body>
 
 <header>
-  <h1>Hypixel Slayer Viewer</h1>
+  <h1>Diana Slayer Stats Viewer</h1>
   <div id="input-area">
-    <input type="text" id="username" placeholder="Enter Minecraft Username" />
+    <input type="text" id="uuid" placeholder="Enter Player UUID" />
     <button id="loadBtn">Load Player</button>
     <div id="error"></div>
   </div>
 </header>
 
 <div id="container">
-  <section id="player-info">
-    <!-- Player avatar will go here -->
-  </section>
-
+  <section id="player-info"></section>
   <section id="slayers">
-    <h2>Slayer Levels</h2>
-    <div id="slayer-content">
-      <!-- Slayer stats go here -->
-    </div>
+    <h2>Slayer Stats</h2>
+    <div id="slayer-content"></div>
   </section>
 </div>
 
 <script>
-  const workerURL = 'https://spring-wood-7a9e.mail4nina2020.workers.dev';
+  const workerURL = 'https://spring-wood-7a9e.mail4nina2020.workers.dev/'; // Put your Cloudflare Worker URL here
 
-  const usernameInput = document.getElementById('username');
+  const uuidInput = document.getElementById('uuid');
   const loadBtn = document.getElementById('loadBtn');
   const playerInfo = document.getElementById('player-info');
   const slayerContent = document.getElementById('slayer-content');
   const errorDiv = document.getElementById('error');
 
   loadBtn.addEventListener('click', () => {
-    const username = usernameInput.value.trim();
-    if (!username) {
-      errorDiv.textContent = 'Please enter a Minecraft username.';
+    const uuid = uuidInput.value.trim();
+    if (!uuid) {
+      errorDiv.textContent = 'Please enter a player UUID.';
       return;
     }
     errorDiv.textContent = '';
-    fetchPlayerData(username);
+    fetchPlayerData(uuid);
   });
 
-  async function fetchPlayerData(username) {
+  async function fetchPlayerData(uuid) {
     playerInfo.innerHTML = '';
     slayerContent.innerHTML = '';
     errorDiv.textContent = '';
 
     try {
-      // 1. Get UUID from Mojang API
-      const mojangRes = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`);
-      if (!mojangRes.ok) {
-        errorDiv.textContent = 'Minecraft username not found.';
-        return;
+      const res = await fetch(`${workerURL}/?uuid=${uuid}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch player data.');
       }
-      const mojangData = await mojangRes.json();
-      const uuid = mojangData.id;
+      const data = await res.json();
 
-      // 2. Fetch player data from your Cloudflare Worker proxy
-      const hypixelRes = await fetch(`${workerURL}/?uuid=${uuid}`);
-      if (!hypixelRes.ok) {
-        errorDiv.textContent = 'Failed to fetch data from Hypixel API.';
-        return;
-      }
-      const hypixelData = await hypixelRes.json();
-
-      if (!hypixelData.player) {
-        errorDiv.textContent = 'Player data not found on Hypixel.';
+      if (!data.player) {
+        errorDiv.textContent = 'Player data not found.';
         return;
       }
 
       displayPlayerModel(uuid);
-      displaySlayers(hypixelData.player);
+      displaySlayers(data.player);
 
-    } catch (e) {
-      errorDiv.textContent = 'An error occurred: ' + e.message;
+    } catch (err) {
+      errorDiv.textContent = err.message;
     }
   }
 
@@ -192,6 +177,7 @@
     ];
 
     slayerContent.innerHTML = '';
+
     slayerTypes.forEach(s => {
       const xpKey = `${s.key}_slayer_xp`;
       const xp = slayer[xpKey] || 0;
@@ -209,4 +195,3 @@
 
 </body>
 </html>
-
