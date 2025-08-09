@@ -231,5 +231,24 @@
             }, 500);
         });
     </script>
+    <div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = window.location.href;  // Current page URL
+    this.page.identifier = window.location.pathname; // Unique identifier for the page
+  };
+
+  (function() {  // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://YOUR_SHORTNAME.disqus.com/embed.js';  // Replace YOUR_SHORTNAME here
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>
+  Please enable JavaScript to view the 
+  <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+
 </body>
 </html>
