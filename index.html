@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MotherDiana's Site</title>
+<title>Diana's Slayer Viewer</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -49,19 +49,19 @@
   #container {
     display: flex;
     gap: 20px;
-    max-width: 1200px;
+    max-width: 900px;
     width: 95%;
     padding: 20px;
     box-sizing: border-box;
   }
-  #player-info, #stats {
+  #player-info, #slayers {
     background: #222;
     border-radius: 8px;
     padding: 15px;
     box-sizing: border-box;
   }
   #player-info {
-    flex: 1 1 250px;
+    flex: 1 1 200px;
     text-align: center;
   }
   #player-info img {
@@ -69,39 +69,24 @@
     border-radius: 10px;
     border: 3px solid #444;
   }
-  #stats {
-    flex: 3 1 600px;
-    color: #ddd;
+  #slayers {
+    flex: 2 1 400px;
   }
-  h2 {
+  #slayers h2 {
     border-bottom: 1px solid #444;
     padding-bottom: 6px;
     margin-top: 0;
   }
-  .section {
-    margin-bottom: 20px;
-  }
-  .level {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-  }
-  .skill-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .skill-item {
-    background: #333;
-    padding: 8px 12px;
-    border-radius: 8px;
-    min-width: 140px;
+  .slayer-level {
+    margin: 12px 0;
+    font-size: 1.1rem;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Hypixel Slayer & Skills Viewer</h1>
+  <h1>Hypixel Slayer Viewer</h1>
   <div id="input-area">
     <input type="text" id="username" placeholder="Enter Minecraft Username" />
     <button id="loadBtn">Load Player</button>
@@ -111,17 +96,13 @@
 
 <div id="container">
   <section id="player-info">
-    <!-- Player avatar here -->
+    <!-- Player avatar will go here -->
   </section>
 
-  <section id="stats">
-    <div class="section" id="slayer-section">
-      <h2>Slayer Levels</h2>
-      <div id="slayers"></div>
-    </div>
-    <div class="section" id="skills-section">
-      <h2>Skills</h2>
-      <div id="skills"></div>
+  <section id="slayers">
+    <h2>Slayer Levels</h2>
+    <div id="slayer-content">
+      <!-- Slayer stats go here -->
     </div>
   </section>
 </div>
@@ -132,8 +113,7 @@
   const usernameInput = document.getElementById('username');
   const loadBtn = document.getElementById('loadBtn');
   const playerInfo = document.getElementById('player-info');
-  const slayersDiv = document.getElementById('slayers');
-  const skillsDiv = document.getElementById('skills');
+  const slayerContent = document.getElementById('slayer-content');
   const errorDiv = document.getElementById('error');
 
   loadBtn.addEventListener('click', () => {
@@ -148,8 +128,7 @@
 
   async function fetchPlayerData(username) {
     playerInfo.innerHTML = '';
-    slayersDiv.innerHTML = '';
-    skillsDiv.innerHTML = '';
+    slayerContent.innerHTML = '';
     errorDiv.textContent = '';
 
     try {
@@ -162,7 +141,7 @@
       const mojangData = await mojangRes.json();
       const uuid = mojangData.id;
 
-      // 2. Fetch player data from Cloudflare Worker proxy
+      // 2. Fetch player data from your Cloudflare Worker proxy
       const hypixelRes = await fetch(`${workerURL}/?uuid=${uuid}`);
       if (!hypixelRes.ok) {
         errorDiv.textContent = 'Failed to fetch data from Hypixel API.';
@@ -177,7 +156,6 @@
 
       displayPlayerModel(uuid);
       displaySlayers(hypixelData.player);
-      displaySkills(hypixelData.player);
 
     } catch (e) {
       errorDiv.textContent = 'An error occurred: ' + e.message;
@@ -187,14 +165,13 @@
   function displayPlayerModel(uuid) {
     playerInfo.innerHTML = `
       <img src="https://crafatar.com/renders/body/${uuid}?size=150&overlay" alt="Player model" />
-      <p>${usernameInput.value}</p>
     `;
   }
 
   function displaySlayers(player) {
     const slayer = player.stats?.Slayer;
     if (!slayer) {
-      slayersDiv.innerHTML = '<p>No Slayer data found.</p>';
+      slayerContent.innerHTML = '<p>No Slayer data found.</p>';
       return;
     }
 
@@ -214,13 +191,13 @@
       { key: 'enderman', name: 'Enderman' }
     ];
 
-    slayersDiv.innerHTML = '';
+    slayerContent.innerHTML = '';
     slayerTypes.forEach(s => {
       const xpKey = `${s.key}_slayer_xp`;
       const xp = slayer[xpKey] || 0;
       const level = getSlayerLevel(xp);
-      slayersDiv.innerHTML += `
-        <div class="level">
+      slayerContent.innerHTML += `
+        <div class="slayer-level">
           <strong>${s.name} Slayer</strong><br />
           Level: ${level}<br />
           XP: ${xp.toLocaleString()}
@@ -228,51 +205,8 @@
       `;
     });
   }
-
-  function displaySkills(player) {
-    const skills = player.achievements;
-    if (!skills) {
-      skillsDiv.innerHTML = '<p>No Skills data found.</p>';
-      return;
-    }
-
-    // Filter out skills keys relevant to Hypixel skills
-    // Common skills keys in Hypixel: mining_fortune, farming, combat, enchanting, alchemy, fishing, taming
-    const skillKeys = [
-      { key: 'experience_skill_mining', name: 'Mining' },
-      { key: 'experience_skill_farming', name: 'Farming' },
-      { key: 'experience_skill_combat', name: 'Combat' },
-      { key: 'experience_skill_enchanting', name: 'Enchanting' },
-      { key: 'experience_skill_alchemy', name: 'Alchemy' },
-      { key: 'experience_skill_fishing', name: 'Fishing' },
-      { key: 'experience_skill_taming', name: 'Taming' }
-    ];
-
-    skillsDiv.innerHTML = '';
-    skillKeys.forEach(s => {
-      const xp = skills[s.key] || 0;
-      const level = calculateSkillLevel(xp);
-      skillsDiv.innerHTML += `
-        <div class="skill-item">
-          <strong>${s.name}</strong><br />
-          Level: ${level}<br />
-          XP: ${xp.toLocaleString()}
-        </div>
-      `;
-    });
-  }
-
-  function calculateSkillLevel(xp) {
-    // Simple XP to level approximation for Hypixel skills (can be adjusted)
-    if (xp >= 1500000) return 50;
-    if (xp >= 1000000) return 40;
-    if (xp >= 500000) return 30;
-    if (xp >= 200000) return 20;
-    if (xp >= 50000) return 10;
-    if (xp > 0) return 1;
-    return 0;
-  }
 </script>
 
 </body>
 </html>
+
