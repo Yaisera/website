@@ -3,31 +3,38 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Skyblock Stats Viewer</title>
+<title>Hypixel Slayer Stats Viewer</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     background: #121212;
     color: #eee;
-    margin: 0; padding: 20px;
-    display: flex; flex-direction: column; align-items: center;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
   }
   header {
-    margin-bottom: 20px;
+    padding: 20px;
     text-align: center;
   }
-  #input-area input, #input-area button {
+  #input-area {
+    margin-bottom: 20px;
+  }
+  #input-area input {
     padding: 8px 12px;
     font-size: 1rem;
     border-radius: 4px;
     border: none;
-  }
-  #input-area input {
     margin-right: 10px;
-    width: 220px;
+    width: 300px;
   }
   #input-area button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: none;
     background-color: #4caf50;
     color: white;
     cursor: pointer;
@@ -39,13 +46,16 @@
     color: #f44336;
     margin-top: 10px;
   }
+
   #container {
     display: flex;
     gap: 20px;
-    max-width: 900px;
-    width: 100%;
+    max-width: 1200px;
+    width: 95%;
+    padding: 20px;
+    box-sizing: border-box;
   }
-  #player-info, #skyblock-stats {
+  #player-info, #slayers {
     background: #222;
     border-radius: 8px;
     padding: 15px;
@@ -60,25 +70,26 @@
     border-radius: 10px;
     border: 3px solid #444;
   }
-  #skyblock-stats {
-    flex: 2 1 600px;
+  #slayers {
+    flex: 2 1 450px;
   }
-  #skyblock-stats h2 {
+  #slayers h2 {
     border-bottom: 1px solid #444;
     padding-bottom: 6px;
     margin-top: 0;
   }
-  .stat-item {
-    margin: 8px 0;
+  .slayer-level {
+    margin: 12px 0;
+    font-size: 1.1rem;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Skyblock Stats Viewer</h1>
+  <h1>Hypixel Slayer Stats Viewer</h1>
   <div id="input-area">
-    <input type="text" id="username" placeholder="Enter Minecraft Username" />
+    <input type="text" id="uuid" placeholder="Enter Minecraft UUID" />
     <button id="loadBtn">Load Player</button>
     <div id="error"></div>
   </div>
@@ -86,13 +97,13 @@
 
 <div id="container">
   <section id="player-info">
-    <!-- Player avatar -->
+    <!-- Player avatar here -->
   </section>
 
-  <section id="skyblock-stats">
-    <h2>Skyblock Stats</h2>
-    <div id="stats-content">
-      <!-- Stats output -->
+  <section id="slayers">
+    <h2>Slayer Stats</h2>
+    <div id="slayer-content">
+      <!-- Slayer stats go here -->
     </div>
   </section>
 </div>
@@ -100,91 +111,91 @@
 <script>
   const workerURL = 'https://spring-wood-7a9e.mail4nina2020.workers.dev';
 
-  const usernameInput = document.getElementById('username');
+  const uuidInput = document.getElementById('uuid');
   const loadBtn = document.getElementById('loadBtn');
   const playerInfo = document.getElementById('player-info');
-  const statsContent = document.getElementById('stats-content');
+  const slayerContent = document.getElementById('slayer-content');
   const errorDiv = document.getElementById('error');
 
   loadBtn.addEventListener('click', () => {
-    const username = usernameInput.value.trim();
-    if (!username) {
-      errorDiv.textContent = 'Please enter a Minecraft username.';
+    const uuid = uuidInput.value.trim();
+    if (!uuid) {
+      errorDiv.textContent = 'Please enter a Minecraft UUID.';
       return;
     }
     errorDiv.textContent = '';
-    fetchPlayerData(username);
+    fetchPlayerData(uuid);
   });
 
-  async function fetchPlayerData(username) {
+  async function fetchPlayerData(uuid) {
     playerInfo.innerHTML = '';
-    statsContent.innerHTML = '';
+    slayerContent.innerHTML = '';
     errorDiv.textContent = '';
 
     try {
-      // Fetch player data from your Cloudflare Worker using username (no Mojang API call here)
-      const res = await fetch(`${workerURL}/?username=${encodeURIComponent(username)}`);
+      const res = await fetch(`${workerURL}/?uuid=${uuid}`);
       if (!res.ok) {
-        errorDiv.textContent = 'Failed to fetch player data.';
+        errorDiv.textContent = `Failed to fetch data (status: ${res.status})`;
         return;
       }
       const data = await res.json();
 
       if (!data.player) {
-        errorDiv.textContent = 'No player data found.';
+        errorDiv.textContent = 'Player data not found on Hypixel.';
         return;
       }
 
-      const uuid = data.player.uuid ?? data.player._id ?? null;
-      if (!uuid) {
-        errorDiv.textContent = 'UUID not found in response.';
-        return;
-      }
+      displayPlayerModel(uuid);
+      displaySlayers(data.player);
 
-      displayPlayerModel(uuid, username);
-      displaySkyblockStats(data.player);
-
-    } catch (e) {
-      errorDiv.textContent = 'An error occurred: ' + e.message;
+    } catch (err) {
+      errorDiv.textContent = 'An error occurred: ' + err.message;
     }
   }
 
-  function displayPlayerModel(uuid, username) {
+  function displayPlayerModel(uuid) {
     playerInfo.innerHTML = `
       <img src="https://crafatar.com/renders/body/${uuid}?size=150&overlay" alt="Player model" />
-      <p>${username}</p>
     `;
   }
 
-  function displaySkyblockStats(player) {
-    // Adjust based on your worker's response structure
-    const sb = player.stats?.SkyBlock || player.stats?.skyblock || player.stats?.SKYBLOCK || null;
-
-    if (!sb) {
-      statsContent.innerHTML = '<p>No Skyblock stats found.</p>';
+  function displaySlayers(player) {
+    const slayer = player.stats?.Slayer;
+    if (!slayer) {
+      slayerContent.innerHTML = '<p>No Slayer data found.</p>';
       return;
     }
 
-    let output = '';
-
-    // Example: coins
-    const coins = sb.coin_purse ?? sb.coins ?? null;
-    if (coins !== null) {
-      output += `<div class="stat-item"><strong>Coins:</strong> ${coins.toLocaleString()}</div>`;
+    function getSlayerLevel(xp) {
+      if (xp >= 2000000) return 5;
+      if (xp >= 1000000) return 4;
+      if (xp >= 500000) return 3;
+      if (xp >= 100000) return 2;
+      if (xp >= 0) return 1;
+      return 0;
     }
 
-    // Example: Slayer XP if present
-    if (player.stats?.Slayer) {
-      const slayers = player.stats.Slayer;
-      output += '<h3>Slayer Levels</h3>';
-      const slayerTypes = ['zombie', 'spider', 'blaze', 'enderman'];
-      slayerTypes.forEach(type => {
-        const xp = slayers[`${type}_slayer_xp`] ?? 0;
-        output += `<div class="stat-item">${type.charAt(0).toUpperCase() + type.slice(1)} XP: ${xp.toLocaleString()}</div>`;
-      });
-    }
+    const slayerTypes = [
+      { key: 'zombie', name: 'Zombie' },
+      { key: 'spider', name: 'Spider' },
+      { key: 'blaze', name: 'Blaze' },
+      { key: 'enderman', name: 'Enderman' }
+    ];
 
-    statsContent.innerHTML = output || '<p>No detailed Skyblock stats found.</p>';
+    slayerContent.innerHTML = '';
+
+    slayerTypes.forEach(s => {
+      const xpKey = `${s.key}_slayer_xp`;
+      const xp = slayer[xpKey] || 0;
+      const level = getSlayerLevel(xp);
+      slayerContent.innerHTML += `
+        <div class="slayer-level">
+          <strong>${s.name} Slayer</strong><br />
+          Level: ${level}<br />
+          XP: ${xp.toLocaleString()}
+        </div>
+      `;
+    });
   }
 </script>
 
