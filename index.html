@@ -28,7 +28,7 @@
     border-radius: 4px;
     border: none;
     margin-right: 10px;
-    width: 300px;
+    width: 280px;
   }
   #input-area button {
     padding: 8px 16px;
@@ -46,7 +46,6 @@
     color: #f44336;
     margin-top: 10px;
   }
-
   #container {
     display: flex;
     gap: 20px;
@@ -71,7 +70,7 @@
     border: 3px solid #444;
   }
   #slayers {
-    flex: 2 1 450px;
+    flex: 2 1 700px;
   }
   #slayers h2 {
     border-bottom: 1px solid #444;
@@ -89,21 +88,21 @@
 <header>
   <h1>Hypixel Slayer Stats Viewer</h1>
   <div id="input-area">
-    <input type="text" id="uuid" placeholder="Enter Minecraft UUID" />
-    <button id="loadBtn">Load Player</button>
+    <input type="text" id="uuid" placeholder="Enter Player UUID" />
+    <button id="loadBtn">Load Slayer Stats</button>
     <div id="error"></div>
   </div>
 </header>
 
 <div id="container">
   <section id="player-info">
-    <!-- Player avatar here -->
+    <!-- Player model renders here -->
   </section>
 
   <section id="slayers">
     <h2>Slayer Stats</h2>
     <div id="slayer-content">
-      <!-- Slayer stats go here -->
+      <!-- Slayer stats will be shown here -->
     </div>
   </section>
 </div>
@@ -120,7 +119,7 @@
   loadBtn.addEventListener('click', () => {
     const uuid = uuidInput.value.trim();
     if (!uuid) {
-      errorDiv.textContent = 'Please enter a Minecraft UUID.';
+      errorDiv.textContent = 'Please enter a UUID.';
       return;
     }
     errorDiv.textContent = '';
@@ -133,12 +132,13 @@
     errorDiv.textContent = '';
 
     try {
-      const res = await fetch(`${workerURL}/?uuid=${uuid}`);
-      if (!res.ok) {
-        errorDiv.textContent = `Failed to fetch data (status: ${res.status})`;
+      const response = await fetch(`${workerURL}/?uuid=${encodeURIComponent(uuid)}`);
+      if (!response.ok) {
+        errorDiv.textContent = `Error fetching player data: ${response.status} ${response.statusText}`;
         return;
       }
-      const data = await res.json();
+
+      const data = await response.json();
 
       if (!data.player) {
         errorDiv.textContent = 'Player data not found on Hypixel.';
@@ -148,8 +148,8 @@
       displayPlayerModel(uuid);
       displaySlayers(data.player);
 
-    } catch (err) {
-      errorDiv.textContent = 'An error occurred: ' + err.message;
+    } catch (e) {
+      errorDiv.textContent = 'An error occurred: ' + e.message;
     }
   }
 
@@ -160,9 +160,20 @@
   }
 
   function displaySlayers(player) {
-    const slayer = player.stats?.Slayer;
-    if (!slayer) {
+    const slayerStats = player.stats?.Slayer;
+    if (!slayerStats) {
       slayerContent.innerHTML = '<p>No Slayer data found.</p>';
+      return;
+    }
+
+    // Slayer XP keys in Hypixel API usually have pattern: {type}_slayer_xp
+    // Let's dynamically list all keys ending with '_slayer_xp'
+
+    const xpEntries = Object.entries(slayerStats)
+      .filter(([key, val]) => key.endsWith('_slayer_xp') && typeof val === 'number');
+
+    if (xpEntries.length === 0) {
+      slayerContent.innerHTML = '<p>No Slayer XP data available.</p>';
       return;
     }
 
@@ -175,22 +186,18 @@
       return 0;
     }
 
-    const slayerTypes = [
-      { key: 'zombie', name: 'Zombie' },
-      { key: 'spider', name: 'Spider' },
-      { key: 'blaze', name: 'Blaze' },
-      { key: 'enderman', name: 'Enderman' }
-    ];
-
     slayerContent.innerHTML = '';
 
-    slayerTypes.forEach(s => {
-      const xpKey = `${s.key}_slayer_xp`;
-      const xp = slayer[xpKey] || 0;
+    xpEntries.forEach(([key, xp]) => {
+      // Extract type from key, e.g. zombie_slayer_xp => Zombie
+      const type = key.replace('_slayer_xp', '').replace(/_/g, ' ');
+      const typeName = type.charAt(0).toUpperCase() + type.slice(1);
+
       const level = getSlayerLevel(xp);
+
       slayerContent.innerHTML += `
         <div class="slayer-level">
-          <strong>${s.name} Slayer</strong><br />
+          <strong>${typeName} Slayer</strong><br />
           Level: ${level}<br />
           XP: ${xp.toLocaleString()}
         </div>
