@@ -1,209 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hypixel Slayer Stats Viewer</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #121212;
-    color: #eee;
-    margin: 0; padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-  }
-  header {
-    padding: 20px;
-    text-align: center;
-  }
-  #input-area {
-    margin-bottom: 20px;
-  }
-  #input-area input {
-    padding: 8px 12px;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: none;
-    margin-right: 10px;
-    width: 220px;
-  }
-  #input-area button {
-    padding: 8px 16px;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: none;
-    background-color: #4caf50;
-    color: white;
-    cursor: pointer;
-  }
-  #input-area button:hover {
-    background-color: #45a049;
-  }
-  #error {
-    color: #f44336;
-    margin-top: 10px;
-  }
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn-icons-png.flaticon.com/32/684/684908.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yaisera's Website'</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(to bottom, #222, #000);
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
 
-  #container {
-    display: flex;
-    gap: 30px;
-    max-width: 900px;
-    width: 95%;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  #player-info {
-    flex: 0 0 180px;
-    text-align: center;
-    background: #222;
-    border-radius: 8px;
-    padding: 15px;
-    box-sizing: border-box;
-  }
-  #player-info img {
-    width: 150px;
-    border-radius: 10px;
-    border: 3px solid #444;
-  }
-  #slayers {
-    flex: 1 1 auto;
-    background: #222;
-    border-radius: 8px;
-    padding: 15px;
-    box-sizing: border-box;
-    max-height: 600px;
-    overflow-y: auto;
-  }
-  #slayers h2 {
-    border-bottom: 1px solid #444;
-    padding-bottom: 8px;
-    margin-top: 0;
-    font-weight: 700;
-    font-size: 1.4rem;
-  }
-  .slayer-level {
-    background: #333;
-    margin: 10px 0;
-    padding: 12px 16px;
-    border-radius: 8px;
-    box-shadow: inset 0 0 8px #000;
-  }
-  .slayer-level strong {
-    font-size: 1.1rem;
-  }
-</style>
+        header {
+            text-align: center;
+            padding: 2rem;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .camera {
+            position: relative;
+            width: 180px;
+            height: 120px;
+            background: linear-gradient(#555, #333);
+            border-radius: 12px;
+            margin: 50px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .lens {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #000 30%, #222 60%, #555 100%);
+            border-radius: 50%;
+            border: 4px solid #aaa;
+            animation: zoom 2s ease-in-out infinite;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .lens-reflection {
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+        }
+
+        .flash {
+            position: absolute;
+            top: -25px;
+            left: calc(50% - 18px);
+            width: 36px;
+            height: 22px;
+            background: linear-gradient(#999, #666);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+        }
+
+        .button {
+            position: absolute;
+            top: -12px;
+            right: 12px;
+            width: 22px;
+            height: 12px;
+            background: #777;
+            border-radius: 3px;
+        }
+
+        .viewfinder {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            width: 20px;
+            height: 15px;
+            background: #111;
+            border: 2px solid #999;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes zoom {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+            nav button {
+                background: none;
+                border: 2px solid white;
+                color: white;
+                padding: 10px 20px;
+                margin: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+                nav button:hover {
+                    background: white;
+                    color: black;
+                }
+
+        .flash-effect {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 9999;
+            box-shadow: 0 0 30px 15px rgba(255,255,255,0.8);
+        }
+
+        #gallery {
+            margin-top: 100vh;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            padding: 50px;
+            background: #111;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <header>My Site</header>
 
-<header>
-  <h1>Hypixel Slayer Stats Viewer</h1>
-  <div id="input-area">
-    <input type="text" id="uuid" placeholder="Enter Minecraft UUID" />
-    <button id="loadBtn">Load Player</button>
-    <div id="error"></div>
-  </div>
-</header>
-
-<div id="container">
-  <section id="player-info">
-    <!-- Player avatar will appear here -->
-  </section>
-
-  <section id="slayers">
-    <h2>Slayer Stats</h2>
-    <div id="slayer-content">
-      <!-- Slayer stats will appear here -->
-    </div>
-  </section>
-</div>
-
-<script>
-  const workerURL = 'https://spring-wood-7a9e.mail4nina2020.workers.dev';
-
-  const uuidInput = document.getElementById('uuid');
-  const loadBtn = document.getElementById('loadBtn');
-  const playerInfo = document.getElementById('player-info');
-  const slayerContent = document.getElementById('slayer-content');
-  const errorDiv = document.getElementById('error');
-
-  loadBtn.addEventListener('click', () => {
-    const uuid = uuidInput.value.trim();
-    if (!uuid) {
-      errorDiv.textContent = 'Please enter a Minecraft UUID.';
-      return;
-    }
-    errorDiv.textContent = '';
-    fetchPlayerData(uuid);
-  });
-
-  async function fetchPlayerData(uuid) {
-    playerInfo.innerHTML = '';
-    slayerContent.innerHTML = '';
-    errorDiv.textContent = '';
-
-    try {
-      const response = await fetch(`${workerURL}/?uuid=${uuid}`);
-      if (!response.ok) {
-        errorDiv.textContent = `Failed to fetch data (Status ${response.status}).`;
-        return;
-      }
-      const data = await response.json();
-
-      if (!data.player) {
-        errorDiv.textContent = 'Player data not found.';
-        return;
-      }
-
-      displayPlayerModel(uuid);
-      displaySlayers(data.player);
-
-    } catch (e) {
-      errorDiv.textContent = 'An error occurred: ' + e.message;
-    }
-  }
-
-  function displayPlayerModel(uuid) {
-    playerInfo.innerHTML = `
-      <img src="https://crafatar.com/renders/body/${uuid}?size=150&overlay" alt="Player Model" />
-    `;
-  }
-
-  function displaySlayers(player) {
-    const slayerStats = player.stats;
-    if (!slayerStats) {
-      slayerContent.innerHTML = '<p>No player stats found.</p>';
-      return;
-    }
-
-    // Filter keys containing 'slayer' (case insensitive) with numeric values
-    const slayerEntries = Object.entries(slayerStats)
-      .filter(([key, val]) => key.toLowerCase().includes('slayer') && typeof val === 'number');
-
-    if (slayerEntries.length === 0) {
-      slayerContent.innerHTML = '<p>No Slayer-related data found.</p>';
-      return;
-    }
-
-    slayerContent.innerHTML = '';
-
-    slayerEntries.forEach(([key, val]) => {
-      // Nicely format key names
-      const typeName = key
-        .replace(/_/g, ' ')
-        .replace(/\b\w/g, c => c.toUpperCase());
-
-      slayerContent.innerHTML += `
-        <div class="slayer-level">
-          <strong>${typeName}</strong><br />
-          Value: ${val.toLocaleString()}
+    <div class="camera" id="camera">
+        <div class="flash" id="cameraFlash"></div>
+        <div class="lens">
+            <div class="lens-reflection"></div>
         </div>
-      `;
-    });
-  }
-</script>
+        <div class="viewfinder"></div>
+        <div class="button"></div>
+        <div class="flash-effect" id="flashEffect"></div>
+    </div>
 
+    <nav>
+        <button id="galleryBtn">Gallery</button>
+    </nav>
+    <section style="font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #2f2f2f; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.7); color: #eee;">
+        <h2>About Me</h2>
+        <p>
+            I’m passionate about photography — capturing moments and telling stories through my lens. Alongside this creative outlet, I’m currently learning web design to build beautiful and functional websites that showcase my work and ideas.
+        </p>
+        <p>
+            Beyond the digital world, I have a deep interest in aerospace engineering and look forward to expanding my knowledge in this exciting field. Combining art, technology, and science motivates me to keep growing and exploring new horizons.
+        </p>
+    </section>
+
+    <div id="gallery">
+        <h2>Gallery Section</h2>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54709099707/in/dateposted-public/" title="2f386433-a4b1-4af6-81e1-c2fb05416b66"><img src="https://live.staticflickr.com/65535/54709099707_1aa70ae921_b.jpg" width="682" height="1024" alt="2f386433-a4b1-4af6-81e1-c2fb05416b66" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54709930446/in/dateposted-public/" title="cd81d250-9cee-41fc-a519-1d914f0f8bdc"><img src="https://live.staticflickr.com/65535/54709930446_227e6c12ac_b.jpg" width="682" height="1024" alt="cd81d250-9cee-41fc-a519-1d914f0f8bdc" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710135823/in/dateposted-public/" title="6af1008e-e9a1-4df1-b092-72e6ccbb302c"><img src="https://live.staticflickr.com/65535/54710135823_16bbb16273_b.jpg" width="682" height="1024" alt="6af1008e-e9a1-4df1-b092-72e6ccbb302c" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710261750/in/dateposted-public/" title="f0c2f14a-0aee-4b1d-8b03-281e1ab4dcec"><img src="https://live.staticflickr.com/65535/54710261750_7a559e6ce0_b.jpg" width="682" height="1024" alt="f0c2f14a-0aee-4b1d-8b03-281e1ab4dcec" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54709888661/in/dateposted-public/" title="DSC_0685"><img src="https://live.staticflickr.com/65535/54709888661_afdceb8286_b.jpg" width="681" height="1024" alt="DSC_0685" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710221020/in/dateposted-public/" title="DSC_0689"><img src="https://live.staticflickr.com/65535/54710221020_501e546a8e_b.jpg" width="1024" height="681" alt="DSC_0689" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710221060/in/dateposted-public/" title="DSC_0681"><img src="https://live.staticflickr.com/65535/54710221060_6413d8db37_b.jpg" width="681" height="1024" alt="DSC_0681" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54709901621/in/dateposted-public/" title="DSC08963"><img src="https://live.staticflickr.com/65535/54709901621_2046a3c796_b.jpg" width="1024" height="680" alt="DSC08963" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710107143/in/dateposted-public/" title="DSC08735"><img src="https://live.staticflickr.com/65535/54710107143_80c28e7c4c_b.jpg" width="1024" height="680" alt="DSC08735" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710233465/in/dateposted-public/" title="DSC08739"><img src="https://live.staticflickr.com/65535/54710233465_7706117d69_b.jpg" width="680" height="1024" alt="DSC08739" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710109573/in/dateposted-public/" title="DSC08636"><img src="https://live.staticflickr.com/65535/54710109573_1673e6b1d7_b.jpg" width="1024" height="680" alt="DSC08636" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710235825/in/dateposted-public/" title="DSC08642"><img src="https://live.staticflickr.com/65535/54710235825_97b07c32ee_b.jpg" width="1024" height="680" alt="DSC08642" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54709073262/in/dateposted-public/" title="DSC08588"><img src="https://live.staticflickr.com/65535/54709073262_a192d98d3b_b.jpg" width="1024" height="680" alt="DSC08588" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710131134/in/dateposted-public/" title="DSC08596"><img src="https://live.staticflickr.com/65535/54710131134_425ede789c_b.jpg" width="1024" height="680" alt="DSC08596" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+        <a data-flickr-embed="true" href="https://www.flickr.com/photos/203333613@N06/54710235850/in/dateposted-public/" title="DSC08632"><img src="https://live.staticflickr.com/65535/54710235850_ba76c8e9d0_b.jpg" width="1024" height="680" alt="DSC08632" /></a>
+        <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+
+        <p>Nikon D50 and Sony A57.</p>
+    </div>
+
+    <script>
+        document.getElementById('galleryBtn').addEventListener('click', function () {
+            const flash = document.getElementById('flashEffect');
+            flash.style.opacity = '1';
+            flash.style.transform = 'translateX(-50%) scale(2)';
+            setTimeout(() => {
+                flash.style.opacity = '0';
+                flash.style.transform = 'translateX(-50%) scale(1)';
+            }, 200);
+            setTimeout(() => {
+                document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        });
+    </script>
 </body>
 </html>
