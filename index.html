@@ -1,141 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minecraft Player Tracker</title>
-  <style>
-    body {
-      font-family: "Minecraftia", monospace;
-      background: linear-gradient(#1d1d1d, #0a0a0a);
-      color: #eee;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft Player Tracker</title>
+    <style>
+        body {
+            font-family: "Minecraftia", monospace, sans-serif;
+            background: linear-gradient(#1d1d1d, #0a0a0a);
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
 
-    h1 {
-      color: #00ff00;
-      text-shadow: 0 0 10px #00ff00;
-    }
+        h1 {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
 
-    input {
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: none;
-      background: #2e2e2e;
-      color: white;
-      margin-right: 10px;
-      font-family: inherit;
-    }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-    button {
-      background: #00aa00;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s;
-    }
+        input, textarea {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            background: #2e2e2e;
+            color: white;
+            font-family: inherit;
+            font-size: 1em;
+        }
 
-    button:hover {
-      background: #00cc00;
-    }
+            input:focus, textarea:focus {
+                outline: none;
+                box-shadow: 0 0 5px #00ff00;
+            }
 
-    .player-list {
-      margin-top: 25px;
-      width: 100%;
-      max-width: 600px;
-    }
+        button {
+            background: #00aa00;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1em;
+            transition: background 0.2s;
+        }
 
-    .player {
-      background: #222;
-      border: 2px solid #333;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-    }
+            button:hover {
+                background: #00cc00;
+            }
 
-    .online {
-      color: #00ff00;
-    }
+        .player-list {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
 
-    .offline {
-      color: #ff5555;
-    }
+        .player {
+            background: #222;
+            border: 2px solid #333;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 15px;
+            transition: transform 0.2s;
+        }
 
-    .status-line {
-      font-size: 0.9em;
-      color: #ccc;
-    }
-  </style>
+            .player:hover {
+                transform: translateY(-2px);
+            }
+
+        .online {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .offline {
+            color: #ff5555;
+            font-weight: bold;
+        }
+
+        .status-line {
+            font-size: 0.9em;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .comment-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #444;
+        }
+
+            .comment-section h4 {
+                color: #00ff00;
+                margin: 0 0 10px;
+                font-size: 1.2em;
+            }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .comment-author {
+            width: 200px;
+        }
+
+        .comment-text {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .comments {
+            margin-bottom: 10px;
+        }
+
+        .comment {
+            background: #2a2a2a;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+            .comment strong {
+                color: #00ff00;
+            }
+
+            .comment a {
+                color: #00ff00;
+                text-decoration: none;
+            }
+
+                .comment a:hover {
+                    text-decoration: underline;
+                }
+
+            .comment small {
+                color: #999;
+                display: block;
+                margin-top: 5px;
+            }
+
+        .error {
+            color: #ff5555;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        /* Fallback for Minecraftia font */
+        @font-face {
+            font-family: "Minecraftia";
+            src: url("https://fontlibrary.org/face/minecraftia") format("truetype");
+        }
+    </style>
 </head>
 <body>
-  <h1>Hypixel Player Tracker</h1>
-  <div>
-    <input id="username" type="text" placeholder="Enter Minecraft username..." />
-    <button onclick="addPlayer()">Add Player</button>
-  </div>
-  <div class="player-list" id="playerList"></div>
+    <h1>Hypixel Player Tracker</h1>
+    <div class="input-container">
+        <input id="username" type="text" placeholder="Enter Minecraft username..." />
+        <button onclick="addPlayer()">Add Player</button>
+    </div>
+    <div class="player-list" id="playerList"></div>
 
-  <script>
-    const workerUrl = "https://spring-wood-7a9e.mail4nina2020.workers.dev/";
-    const players = new Set();
+    <script>
+        const workerUrl = "https://spring-wood-7a9e.mail4nina2020.workers.dev/";
+        const players = new Set();
 
-    async function addPlayer() {
-      const username = document.getElementById("username").value.trim();
-      if (!username) return alert("Enter a username.");
+        // Add a player to the tracker
+        async function addPlayer() {
+            const usernameInput = document.getElementById("username");
+            const username = usernameInput.value.trim();
+            if (!username) {
+                alert("Please enter a username.");
+                return;
+            }
+            if (players.has(username)) {
+                alert("Player already added.");
+                return;
+            }
+            players.add(username);
+            usernameInput.value = "";
+            await fetchStatuses();
+        }
 
-      const uuid = await getUUID(username);
-      if (!uuid) return alert("Username not found.");
+        // Fetch and display player statuses and comments
+        async function fetchStatuses() {
+            const list = document.getElementById("playerList");
+            if (players.size === 0) {
+                list.innerHTML = "<p class='error'>No players added.</p>";
+                return;
+            }
+            list.innerHTML = "<p>Loading...</p>";
 
-      players.add(uuid);
-      fetchStatuses();
-      document.getElementById("username").value = "";
-    }
+            const results = [];
+            for (const username of players) {
+                try {
+                    const res = await fetch(`${workerUrl}?username=${username}`);
+                    const data = await res.json();
+                    if (data.error) {
+                        results.push({ username, error: data.error });
+                    } else if (data.players && data.players.length > 0) {
+                        results.push(data.players[0]);
+                    }
+                } catch (err) {
+                    results.push({ username, error: "Failed to fetch data" });
+                }
+            }
 
-    async function getUUID(username) {
-      try {
-        const res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`);
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.id; // formatted UUID (no dashes)
-      } catch {
-        return null;
-      }
-    }
+            list.innerHTML = "";
+            for (const player of results) {
+                const div = document.createElement("div");
+                div.className = "player";
+                let html = `
+              <strong>${player.username}</strong>
+              <span class="${player.error ? "offline" : player.online ? "online" : "offline"}">
+                ${player.error ? player.error : player.online ? "🟢 Online" : "🔴 Offline"}
+              </span>
+            `;
+                if (!player.error) {
+                    html += `
+                <span class="status-line">Last Seen: ${player.lastOnline}</span>
+                <span class="status-line">Location: ${player.location}</span>
+              `;
+                }
+                html += `
+              <div class="comment-section">
+                <h4>Comments</h4>
+                <div class="comments" id="comments-${player.username}"></div>
+                <form class="comment-form" data-username="${player.username}">
+                  <input type="text" class="comment-author" placeholder="Your name" required>
+                  <textarea class="comment-text" placeholder="Comment (e.g., @otheruser great game!)" required></textarea>
+                  <button type="submit">Post Comment</button>
+                </form>
+              </div>
+            `;
+                div.innerHTML = html;
+                list.appendChild(div);
+                fetchComments(player.username);
+            }
 
-    async function fetchStatuses() {
-      const list = document.getElementById("playerList");
-      if (players.size === 0) return;
+            // Attach event listeners to comment forms
+            document.querySelectorAll(".comment-form").forEach(form => {
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const username = form.dataset.username;
+                    const author = form.querySelector(".comment-author").value.trim();
+                    const text = form.querySelector(".comment-text").value.trim();
+                    if (!author || !text) {
+                        alert("Please fill in all fields.");
+                        return;
+                    }
+                    try {
+                        const res = await fetch(`${workerUrl}/comments`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ username, author, text }),
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            form.reset();
+                            fetchComments(username);
+                        } else {
+                            alert("Failed to post comment: " + data.error);
+                        }
+                    } catch (err) {
+                        alert("Error posting comment. Please try again.");
+                    }
+                });
+            });
+        }
 
-      const res = await fetch(`${workerUrl}?uuids=${[...players].join(",")}`);
-      const data = await res.json();
+        // Fetch and display comments for a specific username
+        async function fetchComments(username) {
+            const commentList = document.getElementById(`comments-${username}`);
+            try {
+                const res = await fetch(`${workerUrl}/comments?username=${username}`);
+                const data = await res.json();
+                if (data.comments && data.comments.length > 0) {
+                    commentList.innerHTML = data.comments
+                        .map(c => `
+                  <div class="comment">
+                    <strong>${c.author}</strong>: ${formatCommentText(c.text)}
+                    <small>${new Date(c.timestamp).toLocaleString()}</small>
+                  </div>
+                `)
+                        .join("");
+                } else {
+                    commentList.innerHTML = "<p>No comments yet.</p>";
+                }
+            } catch (err) {
+                commentList.innerHTML = "<p class='error'>Error loading comments.</p>";
+            }
+        }
 
-      list.innerHTML = "";
-      data.players.forEach((p) => {
-        const div = document.createElement("div");
-        div.className = "player";
-        div.innerHTML = `
-          <strong>${p.username || "Unknown"}</strong>
-          <span class="${p.online ? "online" : "offline"}">
-            ${p.online ? "🟢 Online" : "🔴 Offline"}
-          </span>
-          <span class="status-line">Last Seen: ${p.lastOnline}</span>
-          <span class="status-line">Location: ${p.location}</span>
-        `;
-        list.appendChild(div);
-      });
-    }
+        // Format @mentions to be clickable if the username is tracked
+        function formatCommentText(text) {
+            return text.replace(/@(\w+)/g, (match, username) => {
+                return players.has(username)
+                    ? `<a href="#" onclick="alert('View profile for ${username}');">${match}</a>`
+                    : match;
+            });
+        }
 
-    // auto refresh every 60s
-    setInterval(fetchStatuses, 60000);
-  </script>
+        // Auto-refresh player statuses every 60 seconds
+        setInterval(fetchStatuses, 60000);
+    </script>
 </body>
 </html>
