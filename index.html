@@ -1,291 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyBlock</title>
-  <style>
-    body {
-      font-family: "Minecraftia", monospace, sans-serif;
-      background: linear-gradient(#1d1d1d, #0a0a0a);
-      color: #eee;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 {
-      color: #00ff00;
-      text-shadow: 0 0 10px #00ff00;
-      font-size: 2.5em;
-      margin-bottom: 20px;
-    }
-    .input-container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    input, textarea {
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: none;
-      background: #2e2e2e;
-      color: white;
-      font-family: inherit;
-      font-size: 1em;
-    }
-    input:focus, textarea:focus {
-      outline: none;
-      box-shadow: 0 0 5px #00ff00;
-    }
-    button {
-      background: #00aa00;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 1em;
-      transition: background 0.2s;
-    }
-    button:hover {
-      background: #00cc00;
-    }
-    .player-list {
-      width: 100%;
-      max-width: 600px;
-      margin-top: 20px;
-    }
-    .player {
-      background: #222;
-      border: 2px solid #333;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      padding: 15px;
-      transition: transform 0.2s;
-    }
-    .player:hover {
-      transform: translateY(-2px);
-    }
-    .online {
-      color: #00ff00;
-      font-weight: bold;
-    }
-    .offline {
-      color: #ff5555;
-      font-weight: bold;
-    }
-    .status-line {
-      font-size: 0.9em;
-      color: #ccc;
-      margin-top: 5px;
-    }
-    .comment-section {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #444;
-    }
-    .comment-section h4 {
-      color: #00ff00;
-      margin: 0 0 10px;
-      font-size: 1.2em;
-    }
-    .comment-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .comment-author {
-      width: 200px;
-    }
-    .comment-text {
-      resize: vertical;
-      min-height: 60px;
-    }
-    .comments {
-      margin-bottom: 10px;
-    }
-    .comment {
-      background: #2a2a2a;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 8px;
-      font-size: 0.95em;
-    }
-    .comment strong {
-      color: #00ff00;
-    }
-    .comment a {
-      color: #00ff00;
-      text-decoration: none;
-    }
-    .comment a:hover {
-      text-decoration: underline;
-    }
-    .comment small {
-      color: #999;
-      display: block;
-      margin-top: 5px;
-    }
-    .error {
-      color: #ff5555;
-      font-size: 0.9em;
-      text-align: center;
-    }
-    @font-face {
-      font-family: "Minecraftia";
-      src: url("/fonts/Minecraftia-Regular.ttf") format("truetype");
-    }
-  </style>
-</head>
-<body>
-  <h1>Tracker and Reviews</h1>
-  <div class="input-container">
-    <input id="username" type="text" placeholder="Enter Minecraft username..." />
-    <button onclick="addPlayer()">Add Player</button>
-  </div>
-  <div class="player-list" id="playerList"></div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Alex Bessin – Portrait & nature photographer.">
 
-  <script>
-    const workerUrl = "https://spring-wood-7a9e.mail4nina2020.workers.dev"; // No trailing slash
-    const players = new Set();
+    <title>Alex Bessin | Photography</title>
 
-    async function addPlayer() {
-      const usernameInput = document.getElementById("username");
-      const username = usernameInput.value.trim();
-      if (!username) {
-        alert("Please enter a username.");
-        return;
-      }
-      if (players.has(username)) {
-        alert("Player already added.");
-        return;
-      }
-      players.add(username);
-      usernameInput.value = "";
-      await fetchStatuses();
-    }
+    <!-- Camera Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/32/2920/2920277.png">
 
-    async function fetchStatuses() {
-      const list = document.getElementById("playerList");
-      if (players.size === 0) {
-        list.innerHTML = "<p class='error'>No players added.</p>";
-        return;
-      }
-      list.innerHTML = "<p>Loading...</p>";
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
-      const results = [];
-      for (const username of players) {
-        try {
-          const res = await fetch(`${workerUrl}?username=${encodeURIComponent(username)}`);
-          const data = await res.json();
-          if (data.error) {
-            results.push({ username, error: data.error });
-          } else if (data.players && data.players.length > 0) {
-            results.push(data.players[0]);
-          }
-        } catch (err) {
-          results.push({ username, error: "Failed to fetch data" });
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
 
-      list.innerHTML = "";
-      for (const player of results) {
-        const div = document.createElement("div");
-        div.className = "player";
-        let html = `
-          <strong>${player.username}</strong>
-          <span class="${player.error ? "offline" : player.online ? "online" : "offline"}">
-            ${player.error ? player.error : player.online ? "🟢 Online" : "🔴 Offline"}
-          </span>
-        `;
-        if (!player.error) {
-          html += `
-            <span class="status-line">Last Seen: ${player.lastOnline}</span>
-            <span class="status-line">Location: ${player.location}</span>
-          `;
+        /* GLOBAL */
+        body {
+            background: #0f0f0f;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            text-align: center;
         }
-        html += `
-          <div class="comment-section">
-            <h4>Comments</h4>
-            <div class="comments" id="comments-${player.username}"></div>
-            <form class="comment-form" data-username="${player.username}">
-              <input type="text" class="comment-author" placeholder="Your name" required>
-              <textarea class="comment-text" placeholder="Comment (e.g., @otheruser great game!)" required></textarea>
-              <button type="submit">Post Comment</button>
-            </form>
-          </div>
-        `;
-        div.innerHTML = html;
-        list.appendChild(div);
-        fetchComments(player.username);
-      }
 
-      document.querySelectorAll(".comment-form").forEach(form => {
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const username = form.dataset.username;
-          const author = form.querySelector(".comment-author").value.trim();
-          const text = form.querySelector(".comment-text").value.trim();
-          if (!author || !text) {
-            alert("Please fill in all fields.");
-            return;
-          }
-          try {
-            const res = await fetch(`${workerUrl}/comments`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, author, text }),
-            });
-            const data = await res.json();
-            if (data.success) {
-              form.reset();
-              fetchComments(username);
-            } else {
-              alert("Failed to post comment: " + data.error);
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+            .hero h1 {
+                font-family: 'Playfair Display', serif;
+                font-size: 3.5rem;
+                letter-spacing: 2px;
             }
-          } catch (err) {
-            alert("Error posting comment: " + err.message);
-          }
-        });
-      });
-    }
 
-    async function fetchComments(username) {
-      const commentList = document.getElementById(`comments-${username}`);
-      try {
-        const res = await fetch(`${workerUrl}/comments?username=${encodeURIComponent(username)}`);
-        const data = await res.json();
-        if (res.ok && data.comments && data.comments.length > 0) {
-          commentList.innerHTML = data.comments
-            .map(c => `
-              <div class="comment">
-                <strong>${c.author}</strong>: ${formatCommentText(c.text)}
-                <small>${new Date(c.timestamp).toLocaleString()}</small>
-              </div>
-            `)
-            .join("");
-        } else {
-          commentList.innerHTML = "<p>No comments yet.</p>";
+            .hero p {
+                max-width: 600px;
+                margin: 1.5rem auto;
+                font-size: 1.2rem;
+                color: #bbb;
+            }
+
+            .hero a.instagram {
+                color: #fff;
+                text-decoration: none;
+                border-bottom: 1px solid #fff;
+            }
+
+                .hero a.instagram:hover {
+                    opacity: 0.7;
+                }
+
+        /* NAV */
+        nav {
+            margin-top: 2rem;
         }
-      } catch (err) {
-        commentList.innerHTML = "<p class='error'>Error loading comments.</p>";
-      }
-    }
 
-    function formatCommentText(text) {
-      return text.replace(/@(\w+)/g, (match, username) => {
-        return players.has(username)
-          ? `<a href="#" onclick="alert('View profile for ${username}');">${match}</a>`
-          : match;
-      });
-    }
+            nav a {
+                display: inline-block;
+                border: 2px solid #fff;
+                padding: 14px 32px;
+                margin: 0 10px;
+                border-radius: 6px;
+                font-size: 1.1rem;
+                color: #fff;
+                text-decoration: none;
+                transition: 0.3s;
+                cursor: pointer;
+            }
 
-    setInterval(fetchStatuses, 60000);
-  </script>
+                nav a:hover {
+                    background: #fff;
+                    color: #000;
+                }
+
+        /* ABOUT */
+        .about {
+            max-width: 900px;
+            margin: 6rem auto;
+            padding: 3rem;
+            background: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+            .about h2 {
+                font-family: 'Playfair Display', serif;
+                font-size: 2.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .about p {
+                font-size: 1.1rem;
+                margin-bottom: 1.4rem;
+            }
+
+        /* GALLERY */
+        .gallery-section {
+            padding: 6rem 2rem;
+        }
+
+            .gallery-section h2 {
+                font-family: 'Playfair Display', serif;
+                font-size: 3rem;
+                margin-bottom: 3rem;
+            }
+
+        /* GRID (NOT CENTERED) */
+        .gallery-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            column-count: 5;
+            column-gap: 0;
+            text-align: left;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+            .gallery-item:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                display: block;
+                transition: transform 0.4s ease;
+            }
+
+            .gallery-item:hover img {
+                transform: scale(1.08);
+            }
+
+        /* FOOTER */
+        footer {
+            padding: 3rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+            footer a {
+                color: #aaa;
+                text-decoration: none;
+            }
+
+                footer a:hover {
+                    color: #fff;
+                }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .gallery-grid {
+                column-count: 4;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .gallery-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .gallery-grid {
+                column-count: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero">
+        <h1>Alex Bessin Photography</h1>
+        <p>Capturing authentic moments through portrait and nature photography.</p>
+
+        <p>
+            <a class="instagram" href="https://www.instagram.com/bessin.photography" target="_blank">
+                @bessin.photography
+            </a>
+        </p>
+
+        <nav>
+            <a data-target="about">About Me</a>
+            <a data-target="portraits">Portraits</a>
+            <a data-target="nature">Nature</a>
+        </nav>
+    </section>
+
+    <section id="about" class="about">
+        <h2>About Me</h2>
+        <p>
+            I’m Alex Bessin, a photographer with a strong focus on sports, nature, and portrait photography.
+            I enjoy capturing movement, emotion, and real moments—whether it’s the intensity of competition,
+            the quiet detail of the outdoors, or the personality of an individual.
+        </p>
+        <p>
+            I’m constantly working to refine my style and technical skills, aiming to create images that feel
+            authentic, dynamic, and visually strong.
+        </p>
+        <p>
+            Please reach out regarding any potential projects or collaborations. Located in Coeur d'Alene, ID
+        </p>
+    </section>
+
+    <section id="portraits" class="gallery-section">
+        <h2>Portraits</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709099707_1aa70ae921_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709930446_227e6c12ac_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710135823_16bbb16273_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710261750_7a559e6ce0_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709901621_2046a3c796_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710107143_80c28e7c4c_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710233465_7706117d69_b.jpg"></div>
+        </div>
+    </section>
+
+    <section id="nature" class="gallery-section">
+        <h2>Nature</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710109573_1673e6b1d7_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710235825_97b07c32ee_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709073262_a192d98d3b_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710131134_425ede789c_b.jpg"></div>
+            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710235850_ba76c8e9d0_b.jpg"></div>
+        </div>
+        <p style="margin-top:2rem;color:#888;">Captured with Nikon D50, Sony A57 and Canon R6 III.</p>
+    </section>
+
+    <footer>
+        © 2026 Alex Bessin ·
+        <a href="https://www.instagram.com/bessin.photography" target="_blank">
+            @bessin.photography
+        </a>
+    </footer>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', e => {
+                const targetId = link.dataset.target;
+                const section = document.getElementById(targetId);
+                if (!section) return;
+
+                e.preventDefault();
+
+                const rect = section.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                const offset =
+                    rect.top +
+                    scrollTop -
+                    (window.innerHeight / 2) +
+                    (section.offsetHeight / 2);
+
+                window.scrollTo({
+                    top: offset,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
