@@ -72,7 +72,7 @@ nav {
 
 nav a {
     display: inline-block;
-    font-family: inherit; /* SAME FONT AS EVERYTHING ELSE */
+    font-family: inherit; /* same font as content */
     border: 2px solid #fff;
     padding: 14px 32px;
     margin: 0 10px;
@@ -225,6 +225,22 @@ footer a:hover {
     .about { margin:4rem 1rem; padding:2rem 1.5rem; }
     .about h2 { font-size: 2.2rem; }
     .about p { font-size: 1rem; line-height:1.7; }
+
+    /* MOBILE NAV BUTTONS SCALE */
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 2rem;
+    }
+
+    nav a {
+        width: 80%;
+        text-align: center;
+        padding: 12px 0;
+        font-size: 1rem;
+    }
 }
 
 /* RESPONSIVE GRID */
@@ -232,7 +248,6 @@ footer a:hover {
 @media (max-width: 900px)  { .gallery-grid { column-count: 3; } }
 @media (max-width: 600px)  { .gallery-grid { column-count: 2; } }
 @media (max-width: 400px)  { .gallery-grid { column-count: 1; } }
-
 </style>
 </head>
 <body>
@@ -286,7 +301,7 @@ footer a:hover {
         <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710131134_425ede789c_b.jpg" alt=""></div>
         <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710235850_ba76c8e9d0_b.jpg" alt=""></div>
     </div>
-    <p style="margin-top:2rem;color:#888;">Captured with Nikon D50 and Sony A57.</p>
+    <p style="margin-top:2rem;color:#888;">Captured with Nikon D50, Sony A57 and Canon R6 III.</p>
 </section>
 
 <footer>
@@ -329,21 +344,16 @@ document.querySelectorAll('.gallery-item img').forEach(img => {
     });
 });
 
-modalClose.addEventListener('click', () => {
+function closeModal() {
     modalImg.style.animation = 'zoomOut 0.4s ease forwards';
     setTimeout(() => { modal.style.display = 'none'; }, 400);
-});
+}
 
+modalClose.addEventListener('click', closeModal);
 modal.addEventListener('click', e => {
-    if(e.target === modal) {
-        modalImg.style.animation = 'zoomOut 0.4s ease forwards';
-        setTimeout(() => { modal.style.display = 'none'; }, 400);
-    }
+    if(e.target === modal) closeModal();
 });
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
