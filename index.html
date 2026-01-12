@@ -1,291 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Alex Bessin – Portrait & nature photographer.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Alex Bessin – Sports, nature, and portrait photographer.">
+<title>Alex Bessin | Photography</title>
 
-    <title>Alex Bessin | Photography</title>
+<!-- Camera favicon -->
+<link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/32/2920/2920277.png">
 
-    <!-- Camera Favicon -->
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/32/2920/2920277.png">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <style>
-        /* RESET */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* GLOBAL */
+body {
+    background: #0f0f0f;
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    text-align: center;
+}
 
-        /* GLOBAL */
-        body {
-            background: #0f0f0f;
-            color: #e0e0e0;
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            text-align: center;
-        }
+/* HERO */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
 
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+}
 
-            .hero h1 {
-                font-family: 'Playfair Display', serif;
-                font-size: 3.5rem;
-                letter-spacing: 2px;
-            }
+.hero p {
+    max-width: 600px;
+    margin: 1.5rem auto;
+    font-size: 1.15rem;
+    color: #bbb;
+}
 
-            .hero p {
-                max-width: 600px;
-                margin: 1.5rem auto;
-                font-size: 1.2rem;
-                color: #bbb;
-            }
+.hero a.instagram {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #fff;
+    font-weight: 400;
+}
 
-            .hero a.instagram {
-                color: #fff;
-                text-decoration: none;
-                border-bottom: 1px solid #fff;
-            }
+.hero a.instagram:hover {
+    opacity: 0.7;
+}
 
-                .hero a.instagram:hover {
-                    opacity: 0.7;
-                }
+/* NAV */
+nav {
+    margin-top: 2rem;
+}
 
-        /* NAV */
-        nav {
-            margin-top: 2rem;
-        }
+nav a {
+    display: inline-block;
+    font-family: inherit; /* SAME FONT AS EVERYTHING ELSE */
+    border: 2px solid #fff;
+    padding: 14px 32px;
+    margin: 0 10px;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #fff;
+    text-decoration: none;
+    background: transparent;
+    transition: 0.3s;
+    cursor: pointer;
+}
 
-            nav a {
-                display: inline-block;
-                border: 2px solid #fff;
-                padding: 14px 32px;
-                margin: 0 10px;
-                border-radius: 6px;
-                font-size: 1.1rem;
-                color: #fff;
-                text-decoration: none;
-                transition: 0.3s;
-                cursor: pointer;
-            }
+nav a:hover {
+    background: #fff;
+    color: #000;
+}
 
-                nav a:hover {
-                    background: #fff;
-                    color: #000;
-                }
+/* ABOUT */
+.about {
+    max-width: 900px;
+    margin: 6rem auto;
+    padding: 3rem;
+    background: #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
 
-        /* ABOUT */
-        .about {
-            max-width: 900px;
-            margin: 6rem auto;
-            padding: 3rem;
-            background: #1a1a1a;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
+.about h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+}
 
-            .about h2 {
-                font-family: 'Playfair Display', serif;
-                font-size: 2.8rem;
-                margin-bottom: 1.5rem;
-            }
+.about p {
+    font-size: 1.05rem;
+    margin-bottom: 1.4rem;
+}
 
-            .about p {
-                font-size: 1.1rem;
-                margin-bottom: 1.4rem;
-            }
+/* GALLERY SECTIONS */
+.gallery-section {
+    padding: 6rem 2rem;
+}
 
-        /* GALLERY */
-        .gallery-section {
-            padding: 6rem 2rem;
-        }
+.gallery-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
 
-            .gallery-section h2 {
-                font-family: 'Playfair Display', serif;
-                font-size: 3rem;
-                margin-bottom: 3rem;
-            }
+/* GALLERY GRID */
+.gallery-grid {
+    max-width: 1600px;
+    margin: 0 auto;
+    column-count: 5;
+    column-gap: 0;
+    text-align: left;
+}
 
-        /* GRID (NOT CENTERED) */
-        .gallery-grid {
-            max-width: 1600px;
-            margin: 0 auto;
-            column-count: 5;
-            column-gap: 0;
-            text-align: left;
-        }
+.gallery-item {
+    break-inside: avoid;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
 
-        .gallery-item {
-            break-inside: avoid;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+}
 
-            .gallery-item:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.9);
-            }
+.gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+}
 
-            .gallery-item img {
-                width: 100%;
-                display: block;
-                transition: transform 0.4s ease;
-            }
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
 
-            .gallery-item:hover img {
-                transform: scale(1.08);
-            }
+/* FOOTER */
+footer {
+    padding: 3rem;
+    font-size: 0.9rem;
+    color: #777;
+}
 
-        /* FOOTER */
-        footer {
-            padding: 3rem;
-            font-size: 0.9rem;
-            color: #777;
-        }
+footer a {
+    color: #aaa;
+    text-decoration: none;
+}
 
-            footer a {
-                color: #aaa;
-                text-decoration: none;
-            }
+footer a:hover {
+    color: #fff;
+}
 
-                footer a:hover {
-                    color: #fff;
-                }
+/* MODAL */
+#imageModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.4s ease forwards;
+}
 
-        /* RESPONSIVE */
-        @media (max-width: 1200px) {
-            .gallery-grid {
-                column-count: 4;
-            }
-        }
+#imageModal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    transform: scale(0.8);
+    animation: zoomIn 0.4s ease forwards;
+}
 
-        @media (max-width: 900px) {
-            .gallery-grid {
-                column-count: 3;
-            }
-        }
+#modalClose {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+}
 
-        @media (max-width: 600px) {
-            .gallery-grid {
-                column-count: 2;
-            }
-        }
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
 
-        @media (max-width: 400px) {
-            .gallery-grid {
-                column-count: 1;
-            }
-        }
-    </style>
+@keyframes zoomIn {
+    from {transform: scale(0.8);}
+    to {transform: scale(1);}
+}
+
+@keyframes zoomOut {
+    from {transform: scale(1);}
+    to {transform: scale(0.8);}
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .hero h1 { font-size: 2.6rem; }
+    .about { margin:4rem 1rem; padding:2rem 1.5rem; }
+    .about h2 { font-size: 2.2rem; }
+    .about p { font-size: 1rem; line-height:1.7; }
+}
+
+/* RESPONSIVE GRID */
+@media (max-width: 1200px) { .gallery-grid { column-count: 4; } }
+@media (max-width: 900px)  { .gallery-grid { column-count: 3; } }
+@media (max-width: 600px)  { .gallery-grid { column-count: 2; } }
+@media (max-width: 400px)  { .gallery-grid { column-count: 1; } }
+
+</style>
 </head>
-
 <body>
 
-    <section class="hero">
-        <h1>Alex Bessin Photography</h1>
-        <p>Capturing authentic moments through portrait and nature photography.</p>
-
-        <p>
-            <a class="instagram" href="https://www.instagram.com/bessin.photography" target="_blank">
-                @bessin.photography
-            </a>
-        </p>
-
-        <nav>
-            <a data-target="about">About Me</a>
-            <a data-target="portraits">Portraits</a>
-            <a data-target="nature">Nature</a>
-        </nav>
-    </section>
-
-    <section id="about" class="about">
-        <h2>About Me</h2>
-        <p>
-            I’m Alex Bessin, a photographer with a strong focus on sports, nature, and portrait photography.
-            I enjoy capturing movement, emotion, and real moments—whether it’s the intensity of competition,
-            the quiet detail of the outdoors, or the personality of an individual.
-        </p>
-        <p>
-            I’m constantly working to refine my style and technical skills, aiming to create images that feel
-            authentic, dynamic, and visually strong.
-        </p>
-        <p>
-            Please reach out regarding any potential projects or collaborations. Located in Coeur d'Alene, ID
-        </p>
-    </section>
-
-    <section id="portraits" class="gallery-section">
-        <h2>Portraits</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709099707_1aa70ae921_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709930446_227e6c12ac_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710135823_16bbb16273_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710261750_7a559e6ce0_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709901621_2046a3c796_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710107143_80c28e7c4c_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710233465_7706117d69_b.jpg"></div>
-        </div>
-    </section>
-
-    <section id="nature" class="gallery-section">
-        <h2>Nature</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710109573_1673e6b1d7_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710235825_97b07c32ee_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709073262_a192d98d3b_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710131134_425ede789c_b.jpg"></div>
-            <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710235850_ba76c8e9d0_b.jpg"></div>
-        </div>
-        <p style="margin-top:2rem;color:#888;">Captured with Nikon D50, Sony A57 and Canon R6 III.</p>
-    </section>
-
-    <footer>
-        © 2026 Alex Bessin ·
-        <a href="https://www.instagram.com/bessin.photography" target="_blank">
+<section class="hero">
+    <h1>Alex Bessin Photography</h1>
+    <p>Sports, nature, and portrait photography focused on authentic moments.</p>
+    <p>
+        <a class="instagram" href="https://www.instagram.com/bessin.photography" target="_blank">
             @bessin.photography
         </a>
-    </footer>
+    </p>
+    <nav>
+        <a data-target="about">About Me</a>
+        <a data-target="portraits">Portraits</a>
+        <a data-target="nature">Nature</a>
+    </nav>
+</section>
 
-    <script>
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', e => {
-                const targetId = link.dataset.target;
-                const section = document.getElementById(targetId);
-                if (!section) return;
+<section id="about" class="about">
+    <h2>About Me</h2>
+    <p>I’m Alex Bessin, a photographer with a strong interest in sports, nature, and portrait photography.
+       I enjoy capturing movement, emotion, and authentic moments—whether it’s the intensity of competition,
+       the detail of the outdoors, or the personality of an individual.</p>
+    <p>Sports photography fuels my passion for timing and storytelling, while nature photography keeps me
+       connected to light, texture, and atmosphere. Portraits allow me to slow down and focus on expression
+       and character.</p>
+    <p>I’m constantly refining my technical skills and creative style to produce images that feel dynamic,
+       natural, and visually strong.</p>
+</section>
 
-                e.preventDefault();
+<section id="portraits" class="gallery-section">
+    <h2>Portraits</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709099707_1aa70ae921_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709930446_227e6c12ac_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710135823_16bbb16273_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710261750_7a559e6ce0_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709901621_2046a3c796_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710107143_80c28e7c4c_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710233465_7706117d69_b.jpg" alt=""></div>
+    </div>
+</section>
 
-                const rect = section.getBoundingClientRect();
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+<section id="nature" class="gallery-section">
+    <h2>Nature</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710109573_1673e6b1d7_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710235825_97b07c32ee_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54709073262_a192d98d3b_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710131134_425ede789c_b.jpg" alt=""></div>
+        <div class="gallery-item"><img src="https://live.staticflickr.com/65535/54710235850_ba76c8e9d0_b.jpg" alt=""></div>
+    </div>
+    <p style="margin-top:2rem;color:#888;">Captured with Nikon D50 and Sony A57.</p>
+</section>
 
-                const offset =
-                    rect.top +
-                    scrollTop -
-                    (window.innerHeight / 2) +
-                    (section.offsetHeight / 2);
+<footer>
+    © 2026 Alex Bessin ·
+    <a href="https://www.instagram.com/bessin.photography" target="_blank">@bessin.photography</a>
+</footer>
 
-                window.scrollTo({
-                    top: offset,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+<!-- IMAGE MODAL -->
+<div id="imageModal">
+    <span id="modalClose">&times;</span>
+    <img id="modalImg" src="" alt="">
+</div>
+
+<script>
+// SMOOTH SCROLL TO CENTER
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', e => {
+        const targetId = link.dataset.target;
+        const section = document.getElementById(targetId);
+        if (!section) return;
+        e.preventDefault();
+        const rect = section.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const offset = rect.top + scrollTop - (window.innerHeight / 2) + (section.offsetHeight / 2);
+        window.scrollTo({top: offset, behavior:'smooth'});
+    });
+});
+
+// IMAGE MODAL FUNCTIONALITY
+const modal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const modalClose = document.getElementById('modalClose');
+
+document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        modalImg.src = img.src;
+        modalImg.alt = img.alt || '';
+        modalImg.style.animation = 'zoomIn 0.4s ease forwards';
+    });
+});
+
+modalClose.addEventListener('click', () => {
+    modalImg.style.animation = 'zoomOut 0.4s ease forwards';
+    setTimeout(() => { modal.style.display = 'none'; }, 400);
+});
+
+modal.addEventListener('click', e => {
+    if(e.target === modal) {
+        modalImg.style.animation = 'zoomOut 0.4s ease forwards';
+        setTimeout(() => { modal.style.display = 'none'; }, 400);
+    }
+});
+</script>
+
+</body>
+</html>
 
 </body>
 </html>
